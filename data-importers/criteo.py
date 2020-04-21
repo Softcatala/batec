@@ -38,9 +38,9 @@ class Criteo(DataImport):
         yesterday_date = today_date - timedelta(days=1)
         yesterday = yesterday_date.strftime('%Y-%m-%d')
 
-        baseurl = 'https://publishers.criteo.com//api/2.0/'
+        baseurl = 'https://pmc.criteo.com/api/stats'
         metrics = 'PublisherName;Date;TotalImpression;Revenue'
-        url = '{0}stats.json?apitoken={1}&begindate={2}&enddate={3}&metrics='
+        url = '{0}?apitoken={1}&begindate={2}&enddate={3}&metrics='
         url = url.format(baseurl, self.api_token, yesterday, yesterday, metrics)
         print("url->" + url)
 
@@ -51,8 +51,8 @@ class Criteo(DataImport):
         revenue = 0
         impressions = 0
         for entry in json_payload:
-            revenue += float(entry['revenue']['value'])
-            impressions += entry['totalImpression']
+            revenue += float(entry['Revenue'])
+            impressions += entry['CriteoDisplays']
 
         data = {}
         data['revenue'] = revenue
