@@ -31,7 +31,7 @@ from dictmutilingual import DictMutilingual
 from criteo import Criteo
 from traductor import Traductor
 from stt import STT
-
+from neuraltranslator import NeuralTranslator
 
 def read_parameters():
     parser = OptionParser()
@@ -62,7 +62,7 @@ def main():
     use_importers = read_parameters()
 
     importers = [Catalanitzador(), Programs(), AdSense(), Analytics(),
-                 TTS(), TM(), DictMutilingual(), Criteo(), Traductor(), STT()]
+                 TTS(), TM(), DictMutilingual(), Criteo(), Traductor(), STT(), NeuralTranslator()]
 
     for importer in importers:
         try:
