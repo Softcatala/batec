@@ -28,7 +28,7 @@ class NeuralTranslator(DataImport):
 
     def extract_data(self):
         today_date = datetime.now()
-        yesterday_date = today_date - timedelta(days=0)
+        yesterday_date = today_date - timedelta(days=1)
         yesterday = yesterday_date.strftime('%Y-%m-%d')
 
         url = "https://www.softcatala.org/sc/v2/api/nmt-engcat/stats/?date={0}"
