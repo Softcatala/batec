@@ -45,10 +45,11 @@ class NeuralTranslator(DataImport):
 
         for model_name in data.keys():
             print(model_name)
+            measurament_name = "neural_" + model_name.replace('-', '_')
             model = {}
             fields = {}
             model["time"] = self.store_time()
-            model["measurement"] = model_name
+            model["measurement"] = measurament_name
             model["fields"] = fields
             for key in data[model_name].keys():
                 fields[key] = data[model_name][key]
