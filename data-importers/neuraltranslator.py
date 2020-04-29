@@ -42,18 +42,19 @@ class NeuralTranslator(DataImport):
 
     def transform_data(self, data):
         json_body = []
+        content = {}
+        json_body.append(content)
+        fields = {}
+        content["time"] = self.store_time()
+        content["measurement"] = "neuronal"
+        content["fields"] = fields
 
         for model_name in data.keys():
             print(model_name)
-            measurament_name = "neural_" + model_name.replace('-', '_')
-            model = {}
-            fields = {}
-            model["time"] = self.store_time()
-            model["measurement"] = measurament_name
-            model["fields"] = fields
+            model_name_db = model_name.replace('-', '_')
             for key in data[model_name].keys():
-                fields[key] = data[model_name][key]
+                key_name = "{0}_{1}".format(model_name_db, key)
+                fields[key_name] = data[model_name][key]
 
-            json_body.append(model)
         return json_body
 
