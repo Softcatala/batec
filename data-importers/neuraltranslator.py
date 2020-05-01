@@ -49,12 +49,16 @@ class NeuralTranslator(DataImport):
         content["measurement"] = "neuronal"
         content["fields"] = fields
 
-        for model_name in data.keys():
-            print(model_name)
-            model_name_db = model_name.replace('-', '_')
-            for key in data[model_name].keys():
+        for first_level_key in data.keys():
+            if type(data[first_level_key]) == int:
+                fields[first_level_key] = data[first_level_key]
+                continue
+
+            #print(type(data[model_name]))
+            model_name_db = first_level_key.replace('-', '_')
+            for key in data[first_level_key].keys():
                 key_name = "{0}_{1}".format(model_name_db, key)
-                fields[key_name] = data[model_name][key]
+                fields[key_name] = data[first_level_key][key]
 
         return json_body
 
