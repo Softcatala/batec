@@ -32,7 +32,7 @@ class TM(DataImport):
         yesterday_date = today_date - timedelta(days=1)
         yesterday = yesterday_date.strftime('%Y-%m-%d')
 
-        url = "https://www.softcatala.org/recursos/tm/api/stats?date={0}".format(yesterday)
+        url = "https://api.softcatala.org/memories/v1/stats?date={0}".format(yesterday)
         print("url->" + url)
 
         response = urllib.request.urlopen(url)
