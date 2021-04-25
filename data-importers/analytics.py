@@ -19,7 +19,7 @@
 # Boston, MA 02111-1307, USA.
 
 from dataimport import DataImport
-from datetime import datetime
+from datetime import datetime, timedelta
 from apiclient.discovery import build
 from oauth2client.service_account import ServiceAccountCredentials
 
@@ -62,10 +62,12 @@ class Analytics(DataImport):
         return None
 
     def _get_results(self, service, profile_id):
+
+        date = self._get_retrieve_date().strftime('%Y-%m-%d')
         return service.data().ga().get(
             ids='ga:' + profile_id,
-            start_date='yesterday',
-            end_date='yesterday',
+            start_date=date,
+            end_date=date,
             metrics='ga:sessions, ga:pageviews').execute()
 
     def extract_data(self):
@@ -83,10 +85,15 @@ class Analytics(DataImport):
         data['page_views'] = results.get('rows')[0][1]
         return data
 
+    # Data from day before is not ready to be retrieved, we retried the one from the day before
+    def _get_retrieve_date(self):
+        today_date = datetime.now()
+        return today_date - timedelta(days=2)
+
     def transform_data(self, data):
         json_body = [
             {
-                "time": self.store_time(),
+                "time": self._get_retrieve_date().strftime('%Y-%m-%dT%H:%M:%SZ'),
                 "measurement": "google_analytics",
                 "fields": {
                     "sessions": int(data['sessions']),
