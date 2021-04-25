@@ -33,7 +33,7 @@ class DataImport(metaclass=ABCMeta):
 
     def _load_yaml(self):
         stream = open("influx-db.yaml", "r")
-        values = yaml.load(stream)
+        values = yaml.safe_load(stream)
         self.user = values['user']
         self.password = values['password']
         self.dbname = values['dbname']
